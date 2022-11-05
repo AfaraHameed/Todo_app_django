@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html'%}
+{% block content%}
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="banner">
+                <div class="banner-text">
+                    <h1>ToDo List</h1>
+                </div>
+            </div>
 
-</body>
-</html>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Add Task</h4>
+            <form method="POST" class="p-3 shadow  bg-success bg-gradient">
+                {% csrf_token %}
+                <div class="form-group mt-2">
+                    <input type="text" name="name" class="form-control" id="exampleInputTask" aria-describedby="emailHelp" placeholder="Task to add">
+                </div>
+                <div class="form-group mt-2">
+                    <input type="text" name="priority" class="form-control" id="exampleInputPriority" placeholder="Priority">
+                </div>
+                <button type="submit" class="btn btn-warning mt-2">Add</button>
+
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>Task completed</h3>
+            {% for i in tasks %}
+            <div class="card bg-warning mt-2">
+
+              <div class="card-header">
+                  {{i.name}}
+              </div>
+              <div class="card-body">
+<!--                <h5 class="card-title">{{i.name}}</h5>-->
+                <p class="card-text">{{i.priority}}</p>
+                <a href="{% url 'delete' i.id %}" class="btn btn-danger">Done</a>
+              </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
