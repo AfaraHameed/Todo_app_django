@@ -1,6 +1,6 @@
 from django.http import request
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from todo_app.forms import TodoForms
 from todo_app.models import Task
@@ -10,6 +10,10 @@ class TaskListView(ListView):
     model = Task
     template_name = 'task_view.html'
     context_object_name = 'tasks'
+class TaskDetailView(DetailView):
+    model = Task
+    template_name = 'detail.html'
+    context_object_name = 'i'
 
 # Create your views here.
 # def task(request):
