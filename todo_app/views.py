@@ -1,6 +1,7 @@
 from django.http import request
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 
 from todo_app.forms import TodoForms
 from todo_app.models import Task
@@ -14,6 +15,18 @@ class TaskDetailView(DetailView):
     model = Task
     template_name = 'detail.html'
     context_object_name = 'i'
+class TaskUpdateView(UpdateView):
+    model  = Task
+    template_name = 'update_task.html'
+    context_object_name = 'task'
+    fields = ['name','priority','date']
+    def get_success_url(self):
+        return reverse_lazy('cbvdetail',kwargs={'pk':self.object.id})
+class TaskDeleteView(DeleteView):
+    model = Task
+    template_name = 'delete.html'
+    success_url = reverse_lazy('cbvtask')
+
 
 # Create your views here.
 # def task(request):
